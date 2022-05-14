@@ -1,0 +1,141 @@
+<html>
+    <head>
+        <title>HJS Dos 1.4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+<style>
+    body {
+        background-color: #000000;
+    }
+    #main {
+        font-family: 'Roboto Mono', monospace;
+        color: #fff;
+    }
+
+    input {
+        margin: 5px;
+    }
+</style>
+    </head>
+
+    <body>
+        <div id='main'>
+
+        </div>
+        <input placeholder='command' type="text" id="command" value="" size='50'> <input placeholder='0' type="text" id="num1" value="" size='2'> <input placeholder='0' type="text" id="num2" value="" size='2'> <input type="text" id="num3" placeholder='0' value="" size='2'>
+        <input type='button' id='runbut' onclick='callrun()' value='Run'> <input type='button' onclick='haveclear()' value='Clear'>
+<br><input placeholder='write' type="text" id="docwrite" value="" size='50'> <input placeholder='name' type="text" id="docname" value="" size='8'>
+        
+
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase.js"></script>
+        <script>
+            let callrun = () => {
+var call = document.getElementById('command').value;
+
+if (call == 'c- t') {
+    var give = callTest();
+} else if (call == 'c- !a') {
+var fanum1 = document.getElementById('num1').value;
+var fanum2 = document.getElementById('num2').value;
+var give = callAdd(fanum1, fanum2);
+} else if (call == 'c- !s') {
+var fanum1 = document.getElementById('num1').value;
+var fanum2 = document.getElementById('num2').value;
+var give = callSub(fanum1, fanum2);
+} else if (call == 'c- !m') {
+var fanum1 = document.getElementById('num1').value;
+var fanum2 = document.getElementById('num2').value;
+var give = callMul(fanum1, fanum2);
+} else if (call == 'c- !d') {
+var fanum1 = document.getElementById('num1').value;
+var fanum2 = document.getElementById('num2').value;
+var give = callDiv(fanum1, fanum2);
+} else if (call == 'e') {
+document.getElementById('command').value = '';
+document.getElementById('num1').value = '';
+document.getElementById('num2').value = '';
+document.getElementById('num3').value = '';
+document.getElementById('main').innerHTML = '';
+} else if (call == 'd n') {
+
+var dcname = document.getElementById('docname').value;
+var give = callDocS(dcname);
+} else if (call == 'd #') {
+var dcname = document.getElementById('docname').value;
+var ctext = document.getElementById('docwrite').value;
+var give = callWrite(dcname, ctext);
+} else if (call == 'd r') {
+var dcname = document.getElementById('docname').value;
+var give = callRead(dcname);
+} else if (call == 'd x') {
+var dcname = document.getElementById('docname').value;
+var give = callDel(dcname); 
+} else if (call == 'run */inst') {
+var give = ''; 
+} else {
+    var give = 'syn err';
+}
+
+            var str1 = '<br> ';
+            var str2 = give.toString();
+            var final = str1.concat(str2);
+        let ele = document.getElementById('main');
+        ele.innerHTML += final;
+
+        document.getElementById('command').value = '';
+document.getElementById('num1').value = '';
+document.getElementById('num2').value = '';
+document.getElementById('num3').value = '';
+    }
+
+function haveclear() {
+document.getElementById('command').value = '';
+document.getElementById('num1').value = '';
+document.getElementById('num2').value = '';
+document.getElementById('num3').value = '';
+document.getElementById('main').innerHTML = '';
+}
+
+function callTest() {
+    var callTestGive = '[c- t}} return <T>';
+    return callTestGive;
+}
+
+function callAdd(anum1, anum2) {
+    return +anum1 + +anum2;
+}
+
+function callSub(snum1, snum2) {
+    return +snum1 - +snum2;
+}
+
+function callMul(mnum1, mnum2) {
+    return +mnum1 * +mnum2;
+}
+
+function callDiv(dnum1, dnum2) {
+    return +dnum1 / +dnum2;
+}
+
+function callDocS(dcname) {
+localStorage.setItem(dcname, "null");
+return '[d n} ' + dcname + ' created (%l)';
+}
+
+function callWrite(dcname, string) {
+    localStorage.setItem(dcname, string);
+    return '[d #} ' + dcname + ' written (%l)';
+}
+
+function callRead(dcname) {
+    return localStorage.getItem(dcname);
+}
+
+function callDel(dcname) {
+    localStorage.setItem(dcname, "deleted");
+    return '[d x} ' + dcname + ' deleted.'
+}
+        </script>
+    </body>
+</html>
